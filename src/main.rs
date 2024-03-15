@@ -1,4 +1,4 @@
-use std::{arch::x86_64, char, fs::{self, File}, io::Read, task::Context};
+use std::{char, fs::{self,}};
 mod lexer;
 
 use crate::lexer::Token;
