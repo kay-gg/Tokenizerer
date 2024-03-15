@@ -1,4 +1,4 @@
-use std::{char, fs::{self,}};
+use std::{fs::{self,}};
 mod lexer;
 
 use crate::lexer::Token;
@@ -16,8 +16,5 @@ fn main() {
 		// dbg!(strings);
 		let temp = lex(strings);
 		token_vec.push(temp);
-	}
-	for x in token_vec {
-		dbg!(x);
 	}
 }

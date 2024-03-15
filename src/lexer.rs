@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub struct Token {
 	content: String,
-	taipu: Kind,
+	kind: Kind,
 }
 
 
@@ -35,20 +35,20 @@ fn part1(strings: &str) -> Vec<Token> {
 		if !current.chars().all(char::is_alphanumeric) {
 			// remove last char, push to tokens as temporarly identifier
 			let ch2 = current.pop().unwrap();
-			tokens.push(Token{content: current.clone(), taipu: Kind::Identifier});
+			tokens.push(Token{content: current.clone(), kind: Kind::Identifier});
 			current.clear();
 
 			match ch2 {
 				// ops
-				'+' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
-				'-' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
-				'*' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
-				'/' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
-				'=' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
+				'+' => tokens.push(Token {content: String::from(ch2), kind: Kind::Operator}),
+				'-' => tokens.push(Token {content: String::from(ch2), kind: Kind::Operator}),
+				'*' => tokens.push(Token {content: String::from(ch2), kind: Kind::Operator}),
+				'/' => tokens.push(Token {content: String::from(ch2), kind: Kind::Operator}),
+				'=' => tokens.push(Token {content: String::from(ch2), kind: Kind::Operator}),
 				// seperators
-				';' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Seperator}),
-				'(' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Seperator}),
-				')' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Seperator}),
+				';' => tokens.push(Token {content: String::from(ch2), kind: Kind::Seperator}),
+				'(' => tokens.push(Token {content: String::from(ch2), kind: Kind::Seperator}),
+				')' => tokens.push(Token {content: String::from(ch2), kind: Kind::Seperator}),
 				_ => {},
 			}
 		}
@@ -56,8 +56,27 @@ fn part1(strings: &str) -> Vec<Token> {
 	return tokens;
 }
 
+// can definitely be done during part 1 if want to optimize
 fn part2(token_vec: Vec<Token>) -> Vec<Token>{
+	let mut new: Vec<Token> = Vec::new();
 
-
-	todo!();
+	for tokens in token_vec {
+		match tokens.kind {
+			Kind::Identifier => {
+				if tokens.content == "print" {
+					new.push(Token {content: String::from("print"), kind: Kind::Keyword} )
+				
+				} else if tokens.content.chars().all(char::is_numeric) {
+					// not ideal because content is a string, will need converting unfortunately
+					new.push(Token {content: String::from(tokens.content), kind: Kind::Literal})
+				} else if tokens.content.chars().all(char::is_alphabetic) { // check if identifier(no numbers in name)
+					new.push(tokens);
+				} else {
+					panic!("Something broke!");
+				}
+			},
+			_ => new.push(tokens),
+		}
+	}
+	return new;
 }
