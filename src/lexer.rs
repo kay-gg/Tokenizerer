@@ -1,12 +1,12 @@
 #[derive(Debug)]
 pub struct Token {
 	content: String,
-	taipu: Taipu,
+	taipu: Kind,
 }
 
 
 #[derive(Debug)]
-enum Taipu {
+enum Kind {
 	Identifier,
 	Operator,
 	Literal,
@@ -24,20 +24,20 @@ pub fn lex(strings: &str) -> Vec<Token> {
 		if !current.chars().all(char::is_alphanumeric) {
 			// remove last char, push to tokens as temporarly identifier
 			let ch2 = current.pop().unwrap();
-			tokens.push(Token{content: current.clone(), taipu: Taipu::Identifier});
+			tokens.push(Token{content: current.clone(), taipu: Kind::Identifier});
 			current.clear();
 
 			match ch2 {
 				// ops
-				'+' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Operator}),
-				'-' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Operator}),
-				'*' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Operator}),
-				'/' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Operator}),
-				'=' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Operator}),
+				'+' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
+				'-' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
+				'*' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
+				'/' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
+				'=' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Operator}),
 				// seperators
-				';' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Seperator}),
-				'(' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Seperator}),
-				')' => tokens.push(Token {content: String::from(ch2), taipu: Taipu::Seperator}),
+				';' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Seperator}),
+				'(' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Seperator}),
+				')' => tokens.push(Token {content: String::from(ch2), taipu: Kind::Seperator}),
 				_ => {},
 			}
 		}
