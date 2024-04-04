@@ -1,12 +1,13 @@
 #[derive(Debug)]
 pub struct Token {
-	content: String,
-	kind: Kind,
+	pub content: String,
+	pub kind: Kind,
 }
 
 
 #[derive(Debug)]
-enum Kind {
+#[derive(PartialEq)]
+pub enum Kind {
 	Identifier,
 	Operator,
 	Literal,
@@ -25,13 +26,16 @@ pub fn lex(strings: &str) -> Vec<Token> {
 	return ret;
 }
 
-/// Vec<&str> Vec<&str> Vec<String> Vec<&str>
 fn part1(strings: &str) -> Vec<Token> {
 	let mut tokens: Vec<Token> = Vec::new();
 	let mut current = String::new();
 
 	for ch in strings.chars() {
 		current.push(ch);
+		// i see problem. if ( and maybe more, it is nt alphanumeric. twill pop,
+		// string current will be empty, will lead to an empty identifier token
+		// twill need more sophisticated method of doing this part
+		// this part is for identifiers with lnger than 1 char names, like apple=, will pop = off and push apple as an identifier 
 		if !current.chars().all(char::is_alphanumeric) {
 			// remove last char, push to tokens as temporarly identifier
 			let ch2 = current.pop().unwrap();

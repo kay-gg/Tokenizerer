@@ -1,5 +1,6 @@
-use std::{fs::{self,}};
+use std::{fs};
 mod lexer;
+mod tree;
 
 use crate::lexer::Token;
 use crate::lexer::lex;
@@ -16,5 +17,11 @@ fn main() {
 		// dbg!(strings);
 		let temp = lex(strings);
 		token_vec.push(temp);
+	}
+
+	// create some tree to run from tokens
+	for vector in token_vec {
+		tree::create_tree(vector);
+		println!("\nend\n");
 	}
 }
