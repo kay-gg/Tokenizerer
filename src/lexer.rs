@@ -39,7 +39,10 @@ fn part1(strings: &str) -> Vec<Token> {
 		if !current.chars().all(char::is_alphanumeric) {
 			// remove last char, push to tokens as temporarly identifier
 			let ch2 = current.pop().unwrap();
-			tokens.push(Token{content: current.clone(), kind: Kind::Identifier});
+			// bandaid fix
+			if !current.is_empty() {
+				tokens.push(Token{content: current.clone(), kind: Kind::Identifier});
+			}
 			current.clear();
 
 			match ch2 {
@@ -53,7 +56,8 @@ fn part1(strings: &str) -> Vec<Token> {
 				';' => tokens.push(Token {content: String::from(ch2), kind: Kind::Seperator}),
 				'(' => tokens.push(Token {content: String::from(ch2), kind: Kind::Seperator}),
 				')' => tokens.push(Token {content: String::from(ch2), kind: Kind::Seperator}),
-				_ => {},
+				' ' => (), // for space after keyword print, not ideal probably
+				_ => {panic!("Unknown symbol found: {}", ch2)},
 			}
 		}
 	}
@@ -69,7 +73,6 @@ fn part2(token_vec: Vec<Token>) -> Vec<Token>{
 			Kind::Identifier => {
 				if tokens.content == "print" {
 					new.push(Token {content: String::from("print"), kind: Kind::Keyword} )
-				
 				} else if tokens.content.chars().all(char::is_numeric) {
 					// not ideal because content is a string, will need converting unfortunately
 					new.push(Token {content: String::from(tokens.content), kind: Kind::Literal})
