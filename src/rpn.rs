@@ -3,7 +3,7 @@ use core::panic;
 use crate::lexer::Token;
 use crate::lexer::Kind;
 
-pub fn create_tree(mut token_vec: Vec<Token>) {
+pub fn rpn_from_tokens(mut token_vec: Vec<Token>) -> Vec<Token> {
 	// shunting yard
 	let mut op_stack: Vec<Token> = Vec::new();
 	let mut output: Vec<Token> = Vec::new();
@@ -30,6 +30,7 @@ pub fn create_tree(mut token_vec: Vec<Token>) {
 				while let Some(find_parenthesis) = op_stack.pop() {
 					if find_parenthesis.content != "(" {
 						output.push(find_parenthesis);
+					} else {
 						break;
 					}
 				}
@@ -42,10 +43,11 @@ pub fn create_tree(mut token_vec: Vec<Token>) {
 		output.push(op_in_stack);
 	}
 	// end shunting yard
-	
-	for xx in output {
-			print!("{:?}\n", xx);
+	for xx in output.iter() {
+		println!("{:?}", xx);
 	}
+	
+	return output;	
 }
 
 fn get_precedence(op: &String) -> i8 {
