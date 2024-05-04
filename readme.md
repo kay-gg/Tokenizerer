@@ -16,4 +16,5 @@ The input file needs to be formatted a specific way for the Tokenizerer to read 
 - Have no spaces.
 - Each statement/expression should end in a semi-colon.
 - Only use the operators +-/*
+
 Sample input is included in the binary download and in the source code's folder, so you can model any new code you write off of that.
