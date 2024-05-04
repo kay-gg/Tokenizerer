@@ -9,9 +9,9 @@ This is a Rust project, so you will need Rust and Cargo installed to build this 
 
 In order to build:
 
-```git clone https://github.com/kyle-gardner/Tokenizer ```
+```git clone https://github.com/kyle-gardner/Tokenizerer ```
 
-```cd ./Tokenizer/ ```
+```cd ./Tokenizerer/ ```
 
 ```cargo run```
 
