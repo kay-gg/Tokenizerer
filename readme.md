@@ -8,8 +8,11 @@ Even though it isn't exactly what I was going for, it's still cool and I had fun
 This is a Rust project, so you will need Rust and Cargo installed to build this program. If you just want to run the program, feel free to only download the binary.
 
 In order to build:
+
 ```git clone https://github.com/kyle-gardner/Tokenizer ```
+
 ```cd ./Tokenizer/ ```
+
 ```cargo run```
 
 or you can get the binary I've built for you :)
